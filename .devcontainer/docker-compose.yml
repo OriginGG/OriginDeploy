@@ -11,9 +11,6 @@ services:
         USER_GID: 1000
 
     init: true
-    ports: 
-      - 3000:3000
-      - 5000:5000
     volumes:
       # Forwards the local Docker socket to the container.
       - /var/run/docker.sock:/var/run/docker-host.sock 
@@ -23,9 +20,37 @@ services:
     # Overrides default command so things don't shut down after the process ends.
     entrypoint: /usr/local/share/docker-init.sh
     command: sleep infinity 
+  
+  frontend:
+    image: node
+    ports:
+      - 3000:3000
     environment:
       REACT_APP_GQL_URI: http://localhost:5000/graphql
+    entrypoint:
+      - /bin/sh
+      - -cex
+      - |
+        cd /workspace/NewOriginFrontEnd
+        yarn start 
+        sleep infinity
+    volumes:
+      - workspace:/workspace:cached
+        
+  backend:
+    image: node
+    ports:
+      - 5000:5000
+    environment:
       POSTGRAPHILE_PORT: 5000
+    entrypoint:
+      - /bin/sh
+      - -cex
+      - |
+        cd /workspace/NewOriginBackend
+        yarn start 
+    volumes:
+      - workspace:/workspace:cached
 
     # Uncomment the next four lines if you will use a ptrace-based debuggers like C++, Go, and Rust.
     # cap_add:
