@@ -2,6 +2,7 @@ version: '3'
 
 volumes: 
   workspace:
+  db:
 
 services:
   workspace:
@@ -85,6 +86,8 @@ services:
       POSTGRES_USER: origin
     ports:
       - 5432
+    volumes:
+      - db:/var/lib/postgresql/data/
 
     # Uncomment the next four lines if you will use a ptrace-based debuggers like C++, Go, and Rust.
     # cap_add:
