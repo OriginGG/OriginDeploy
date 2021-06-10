@@ -27,6 +27,8 @@ services:
       - 3000:3000
     environment:
       REACT_APP_GQL_URI: http://localhost:5000/graphql
+      PORT: 3000
+      HOST: 127.0.0.1
     entrypoint:
       - /bin/sh
       - -cex
@@ -48,7 +50,7 @@ services:
       - -cex
       - |
         cd /workspace/NewOriginBackend
-        yarn start 
+        yarn start-postgraphile 
     volumes:
       - workspace:/workspace:cached
 
