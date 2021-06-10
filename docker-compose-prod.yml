@@ -9,7 +9,7 @@ services:
       - "traefik.http.routers.frontend.tls.certresolver=letsencrypt"
     image: frontend-image 
     environment:
-      REACT_APP_GQL_URI: https://api.site.com/graphql
+      REACT_APP_GQL_URL: https://api.site.com/graphql
       PORT: 3000
     expose:
       - 3000

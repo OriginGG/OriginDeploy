@@ -23,6 +23,11 @@ RUN apt-get update \
     # Clean up
     && apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/* /tmp/library-scripts/
 
+# Install n, node lts version, and yarn
+RUN curl -L https://raw.githubusercontent.com/tj/n/master/bin/n -o n
+RUN bash n lts
+RUN npm i -g yarn
+
 # Setting the ENTRYPOINT to docker-init.sh will configure non-root access 
 # to the Docker socket. The script will also execute CMD as needed.
 ENTRYPOINT [ "/usr/local/share/docker-init.sh" ]
